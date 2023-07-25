@@ -27,17 +27,22 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", async(req, res) => {
-    const {sDate, eDate} = req.body ;
-    console.log(sDate+" " + eDate);
-    console.log(typeof(sDate));
     
-    const query = `
-        SELECT *
-        FROM payment 
-        WHERE payment_id = $1 || payment_id = $2
-    `;
+    const {sdate, edate} = req.body ;
+    console.log(`${sdate} ${edate}`);
+    console.log(typeof(sdate));
+    
+    const query = {
+        name: "fetch-database",
+        text: `SELECT payment_id, amount, TO_CHAR(payment_date,'DD-MM-YYYY')
+            FROM payment WHERE DATE(payment_date)
+            BETWEEN $1 AND $2
+            ORDER BY DATE(payment_date)`,
+        values: [sdate,edate]
+        
+    }
 
-    const result = await pool.query(query,[sDate, eDate]);
+    const result = await pool.query(query);
     console.log(result.rows);
     res.render("sql",{
         entries: result.rows
