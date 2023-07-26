@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Data Table</title>
   <link rel="stylesheet" href="/css/styles.css">
+  
 </head>
 <body>
   <div class="table-container">
@@ -14,6 +15,7 @@
           <th>payment_id</th>
           <th>Amount</th>
           <th>DATE</th>
+          <th>TIME</th>
           <!-- Add more table headers for each column in your data -->
         </tr>
       </thead>
@@ -24,13 +26,23 @@
             <tr>
                 <td><%= entries[i].payment_id %></td>
                 <td><%= entries[i].amount %></td>
-                <td><%= entries[i].to_char %></td>
+                <td><%= entries[i].date %></td>
+                <td><%= entries[i].time %></td>
             </tr>
         <% } %>
-        
 
       </tbody>
     </table>
   </div>
+  <!-- <div class="pdf-download-button"> 
+    <form action="/download-pdf" method="post">
+      <input type="hidden" name="sdate" value=<%= sdate %>>
+      <input type="hidden" name="edate" value=<%= edate %>>
+      <button type="submit">Download PDF</button>
+    </form>
+  </div> -->
+  
+  <button id="browserPrint">Download PDF</button>
+  <script  src="/script.js" ></script>
 </body>
 </html>
